@@ -1,0 +1,39 @@
+<div class="login-container">
+    <div class="box-form">
+      <h3 class="title">Movie<span class="red-text">Data</span></h3>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+        <p class="title-login">Login</p>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email 
+            <b *ngIf="loginForm.get('email')?.errors?.required" class="text-danger">*</b>
+            <b *ngIf="loginForm.get('email')?.errors?.pattern" class="text-danger"> * Formato de e-mail inválido</b>
+          </label>
+          <input 
+            formControlName="email" 
+            type="email"
+            class="input-login" 
+            id="email" 
+            placeholder="meuemail@example.com" 
+            required 
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password <b *ngIf="loginForm.get('password')?.errors?.required" class="text-danger"> *</b></label>
+          <input formControlName="password" class="input-login" id="password" type="password" placeholder="mypassword" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-100 button-submit" [disabled]="loading">Login</button>
+        <span class="span-redirect">Não possui uma conta? <a class="redirect-register" href="/register">Cadastre-se.</a></span>
+      </form>
+    </div>
+    <div class="overlay" [hidden]="!loading"></div>
+  
+    <div class="spinner-container" [hidden]="!loading">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div class="custom-alert" *ngIf="successMessage">
+      Usuário autenticado! Entrando na plataforma...
+    </div>
+  </div>

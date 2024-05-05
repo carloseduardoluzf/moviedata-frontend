@@ -1,0 +1,68 @@
+<div class="movie-form-container">
+    <div class="box-form">
+      <div><button class="btn btn-primary btn-back" (click)="goBack()">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+      </button></div>
+      
+      <div class="text-center"><h1 class="title">Adicione seu <span class="orange-text">Filme</span></h1></div>
+      <form (ngSubmit)="createMovie()" #movieForm="ngForm">
+        <div class="mb-3">
+          <label for="title" class="form-label">Título<b *ngIf="movieForm.controls['title']?.hasError('required')" class="text-danger">*</b></label>
+          <input
+            type="text"
+            class="input-movie"
+            id="title"
+            name="title"
+            [(ngModel)]="movie.title"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="director" class="form-label">Diretor<b *ngIf="movieForm.controls['director']?.hasError('required')" class="text-danger">*</b></label>
+          <textarea
+            class="input-movie"
+            id="director"
+            name="director"
+            [(ngModel)]="movie.director"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="year" class="form-label">Year<b *ngIf="movieForm.controls['year']?.hasError('required')" class="text-danger">*</b></label>
+          <input
+            type="text"
+            class="input-movie"
+            id="year"
+            name="year"
+            [(ngModel)]="movie.year"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="genre" class="form-label">Gênero<b *ngIf="movieForm.controls['genre']?.hasError('required')" class="text-danger">*</b></label>
+          <textarea
+            class="input-movie"
+            id="genre"
+            name="genre"
+            [(ngModel)]="movie.genre"
+            required
+          ></textarea>
+        </div>
+        <input
+          type="hidden"
+          class="form-control input-movie"
+          id="userId"
+          name="userId"
+          [(ngModel)]="movie.userId"
+          required
+        />
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-movie">Criar Filme</button>
+        </div>
+      </form>
+    </div>
+  
+    <div class="custom-alert" *ngIf="successMessage">
+      Filme adicionado com sucesso!
+    </div>
+  </div>
