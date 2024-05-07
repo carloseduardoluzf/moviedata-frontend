@@ -1,0 +1,9 @@
+<div class="favorites-container">
+    <h2>Meus Favoritos</h2>
+    <div *ngFor="let movie of favoriteMovies" class="favorite-movie">
+      <div class="movie-title">{{ movie.title }}</div>
+      <div class="movie-director">Diretor: {{ movie.director }}</div>
+      <div class="movie-year">Ano: {{ movie.year }}</div>
+      <div class="movie-genre">Gênero: {{ movie.genre }}</div>
+    </div>
+  </div>

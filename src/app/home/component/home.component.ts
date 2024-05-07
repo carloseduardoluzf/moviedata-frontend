@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
  
   
   movies: Movie[] = [];
+  favoriteMovies: Movie[] = [];
   private tokenExpirationTimer: any;
   displayedColumns: string[] = ['id', 'title', 'director', 'year', 'genre', 'actions'];
   dataSource: MatTableDataSource<Movie> = new MatTableDataSource<Movie>(this.movies);
@@ -50,7 +51,7 @@ export class HomeComponent implements OnInit {
     // Verifica se o token do localStorage está presente e decodifica o token para obter o ID do usuário
     const id = this.getUserIdByLocalStorage();
     console.log('ID do usuário:', id);
-  console.log('ID do filme:', movie.userId);
+    console.log('ID do filme:', movie.userId);
     if (id && movie.userId === id) {
       return true;
     }
@@ -91,6 +92,7 @@ export class HomeComponent implements OnInit {
         this.homeService.deleteMovie(movie.id).subscribe(
           () => {
             this.movies = this.movies.filter(m => m.id !== movie.id);
+            this.dataSource.data = this.movies;
           },
           error => {
             console.error('Erro ao excluir filme:', error);
@@ -103,11 +105,12 @@ export class HomeComponent implements OnInit {
   }
 
   editMovie(movie: Movie): void {
-    this.homeService.editMovie(movie).subscribe(
+    this.homeService.editMovie(movie.id!).subscribe(
       updatedMovie => {
         const index = this.movies.findIndex(m => m.id === updatedMovie.id);
         if (index !== -1) {
           this.movies[index] = updatedMovie;
+          this.dataSource.data = this.movies; // Atualiza a fonte de dados da tabela
         }
       },
       error => {
@@ -134,6 +137,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  redirectToEditMovie(movieId: number): void {
+    this.router.navigate(['/edit', movieId]);
+  }
+
   logout(): void {
     // Limpa os dados armazenados no localStorage
     localStorage.removeItem('token');
@@ -142,5 +149,18 @@ export class HomeComponent implements OnInit {
     clearTimeout(this.tokenExpirationTimer);
     // Redireciona o usuário para a página de login
     this.router.navigate(['/login']);
+  }
+
+  isFavorite(movie: Movie): boolean {
+    return this.favoriteMovies.some(favMovie => favMovie.id === movie.id);
+  }
+
+  toggleFavorite(movie: Movie): void {
+    const index = this.favoriteMovies.findIndex(favMovie => favMovie.id === movie.id);
+    if (index !== -1) {
+      this.favoriteMovies.splice(index, 1);
+    } else {
+      this.favoriteMovies.push(movie);
+    }
   }
 }

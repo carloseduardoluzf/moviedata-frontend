@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { Movie } from 'src/model/Movie';
 import { catchError } from 'rxjs/operators'; 
@@ -19,6 +19,8 @@ export class HomeService {
   get RequiredRefresh(){
     return this._refreshrequired;
   }
+
+  
 
   getAllMovies(): Observable<Movie[]> {
     const token = localStorage.getItem('token');
@@ -49,11 +51,84 @@ export class HomeService {
 
   deleteMovie(movieId: number): Observable<void> {
     const url = `${this.baseUrl}/${movieId}`;
-    return this.http.delete<void>(url);
+    
+    // Obter o token JWT do localStorage
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      const errorMessage = 'Token JWT não encontrado';
+      console.error(errorMessage);
+      return throwError(errorMessage);
+    }
+
+    // Configurar o cabeçalho com o token JWT
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Enviar a solicitação HTTP DELETE com o cabeçalho de autorização
+    return this.http.delete<void>(url, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Erro ao excluir o filme:', error);
+          return throwError(error);
+        })
+      );
   }
 
-  editMovie(movie: Movie): Observable<Movie> {
-    const url = `${this.baseUrl}/${movie.id}`;
-    return this.http.put<Movie>(url, movie);
+  editMovie(movieId: number): Observable<Movie> {
+    const url = `${this.baseUrl}/${movieId}`;
+    
+    // Obter o token JWT do localStorage
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      const errorMessage = 'Token JWT não encontrado';
+      console.error(errorMessage);
+      return throwError(errorMessage);
+    }
+
+    // Configurar o cabeçalho com o token JWT
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Enviar a solicitação HTTP PUT com o cabeçalho de autorização
+    return this.http.put<Movie>(url, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Erro ao atualizar o filme:', error);
+          return throwError(error);
+        })
+      );
   }
+
+
+  getMovieById(movieId: number): Observable<Movie> {
+    const url = `${this.baseUrl}/${movieId}`;
+
+    // Obter o token JWT do localStorage
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      const errorMessage = 'Token JWT não encontrado';
+      console.error(errorMessage);
+      return throwError(errorMessage);
+    }
+
+    // Configurar o cabeçalho com o token JWT
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Enviar a solicitação HTTP GET com o cabeçalho de autorização
+    return this.http.get<Movie>(url, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Erro ao obter detalhes do filme:', error);
+          return throwError(error);
+        })
+      );
+  }
+
 }

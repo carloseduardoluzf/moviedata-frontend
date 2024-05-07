@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 style="text-align: center; margin-top: 50px;">Editar Filme</h2>
+        <form (ngSubmit)="saveMovie()">
+          <div class="form-group mb-3">
+            <label>Título</label>
+            <input type="text" class="form-control" [(ngModel)]="movie.title" name="title">
+          </div>
+          <div class="form-group mb-3">
+            <label>Diretor</label>
+            <input type="text" class="form-control" [(ngModel)]="movie.director" name="director">
+          </div>
+          <div class="form-group mb-3">
+            <label>Ano</label>
+            <input type="number" class="form-control" [(ngModel)]="movie.year" name="year">
+          </div>
+          <div class="form-group mb-3">
+            <label>Gênero</label>
+            <input type="text" class="form-control" [(ngModel)]="movie.genre" name="genre">
+          </div>
+          <button type="submit" style="justify-content: center;" class="btn btn-primary">Salvar</button>
+        </form>
+      </div>
+    </div>
+  </div>

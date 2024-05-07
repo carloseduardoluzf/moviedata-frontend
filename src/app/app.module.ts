@@ -14,11 +14,15 @@ import {MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MovieFormComponent } from './movie-form/component/movie-form.component';
 import { PaginationComponent } from './pagination/pagination/pagination.component';
+import { EditMovieComponent } from './edit-movie/edit-movie.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    EditMovieComponent,
+    FavoritesComponent,
     RegisterComponent,
     HomeComponent,
     MovieFormComponent,
