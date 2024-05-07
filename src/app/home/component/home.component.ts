@@ -7,6 +7,7 @@ import jwt_decode from 'jwt-decode';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { FavoritesService } from 'src/app/favorites/favorites.service';
 
 @Component({
   selector: 'app-home',
@@ -24,13 +25,28 @@ export class HomeComponent implements OnInit {
   dataSource: MatTableDataSource<Movie> = new MatTableDataSource<Movie>(this.movies);
 
 
-  constructor(private homeService: HomeService, private router: Router) { }
+  constructor(private homeService: HomeService, private router: Router, private favoritesService: FavoritesService) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator; 
 
   ngOnInit(): void {
     this.loadMovies();
+    this.loadFavoriteMovies();
+  }
+  loadFavoriteMovies(): void {
+    this.favoriteMovies = this.favoritesService.getFavoriteMovies();
+  }
+
+
+  isFavorite(movie: Movie): boolean {
+    return this.favoriteMovies.some(favMovie => favMovie.id === movie.id);
+  }
+
+  toggleFavorite(movie: Movie): void {
+    this.favoritesService.toggleFavorite(movie); // Chama o método toggleFavorite do FavoritesService
+    this.loadFavoriteMovies();
+  
   }
 
   loadMovies(): void {
@@ -50,8 +66,6 @@ export class HomeComponent implements OnInit {
   isOwner(movie: Movie): boolean {
     // Verifica se o token do localStorage está presente e decodifica o token para obter o ID do usuário
     const id = this.getUserIdByLocalStorage();
-    console.log('ID do usuário:', id);
-    console.log('ID do filme:', movie.userId);
     if (id && movie.userId === id) {
       return true;
     }
@@ -151,16 +165,5 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  isFavorite(movie: Movie): boolean {
-    return this.favoriteMovies.some(favMovie => favMovie.id === movie.id);
-  }
-
-  toggleFavorite(movie: Movie): void {
-    const index = this.favoriteMovies.findIndex(favMovie => favMovie.id === movie.id);
-    if (index !== -1) {
-      this.favoriteMovies.splice(index, 1);
-    } else {
-      this.favoriteMovies.push(movie);
-    }
-  }
+ 
 }

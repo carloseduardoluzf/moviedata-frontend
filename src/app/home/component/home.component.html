@@ -9,7 +9,8 @@
     <button type="button" class="btn btn-primary logout-button" (click)="logout()">
       Logout <i class="fas fa-sign-out-alt"></i>
     </button>
-    <button class="add-button" mat-button routerLink="/favorites">Ver Favoritos</button>
+    <button type="button" class="btn btn-primary add-button" routerLink="/favorites">Ver Favoritos</button>
+    <button type="button" class="btn btn-primary add-button" routerLink="/user">Editar Usuário</button>
   </div>
 </div>
 <div class="home-container" >
@@ -45,9 +46,9 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let movie">
-        <button mat-icon-button (click)="toggleFavorite(movie)">
+        <button mat-icon-button (click)="toggleFavorite(movie)" [ngClass]="{ 'active': isFavorite(movie) }">
           <mat-icon>{{ isFavorite(movie) ? 'favorite' : 'favorite_border' }}</mat-icon>
-        </button>
+      </button>
         <button *ngIf="isOwner(movie)" mat-icon-button (click)="redirectToEditMovie(movie.id)">
           <mat-icon>edit</mat-icon>
         </button>

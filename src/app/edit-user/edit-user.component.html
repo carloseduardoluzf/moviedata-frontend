@@ -1,0 +1,35 @@
+<div class="edit-container">
+    <div class="box-form">
+        <button mat-icon-button class="button-back" (click)="goToHome()">
+            <mat-icon>keyboard_return</mat-icon>
+          </button>
+      <h6 class="title">Alterar <span class="red-text">Senha</span></h6>
+      <form [formGroup]="newPasswordForm" (ngSubmit)="changePassword()" class="login-form">
+        <div class="mb-3">
+          <label for="oldPassword" class="form-label">Senha Antiga <b *ngIf="newPasswordForm.get('oldPassword')?.errors?.required" class="text-danger"> *</b></label>
+          <input formControlName="oldPassword" class="input-edit" id="oldPassword" type="password" placeholder="Sua senha antiga" required />
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">Nova Senha <b *ngIf="newPasswordForm.get('newPassword')?.errors?.required" class="text-danger"> *</b></label>
+          <input formControlName="newPassword" class="input-edit" id="newPassword" type="password" placeholder="Sua nova senha" required />
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirmar Nova Senha <b *ngIf="newPasswordForm.get('confirmPassword')?.errors?.required" class="text-danger"> *</b></label>
+          <input formControlName="confirmPassword" class="input-edit" id="confirmPassword" type="password" placeholder="Confirme sua nova senha" required />
+        </div>
+        <button type="submit" class="btn btn-primary w-100 button-submit" [disabled]="loading">Alterar Senha</button> 
+      </form>
+    </div>
+  
+    <div class="overlay" [hidden]="!loading"></div>
+    
+    <div class="spinner-container" [hidden]="!loading">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <div class="custom-alert" *ngIf="successMessage">
+      Senha alterada com sucesso!
+    </div>
+  </div>

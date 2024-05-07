@@ -1,9 +1,25 @@
 <div class="favorites-container">
-    <h2>Meus Favoritos</h2>
-    <div *ngFor="let movie of favoriteMovies" class="favorite-movie">
-      <div class="movie-title">{{ movie.title }}</div>
-      <div class="movie-director">Diretor: {{ movie.director }}</div>
-      <div class="movie-year">Ano: {{ movie.year }}</div>
-      <div class="movie-genre">Gênero: {{ movie.genre }}</div>
-    </div>
+  <h2 class="table-title">Meus Favoritos <button class="btn btn-primary" (click)="goToHome()">
+    <i class="fas fa-arrow-left"></i> Voltar para Home
+  </button></h2>
+  <div class="table-responsive table-box">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Diretor</th>
+          <th>Ano</th>
+          <th>Gênero</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movie of favoriteMovies">
+          <td>{{ movie.title }}</td>
+          <td>{{ movie.director }}</td>
+          <td>{{ movie.year }}</td>
+          <td>{{ movie.genre }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>

@@ -5,4 +5,5 @@ export class Movie {
     year!: number;
     genre!: string;
     userId?: number;
+    isFavorite?: boolean;
 }

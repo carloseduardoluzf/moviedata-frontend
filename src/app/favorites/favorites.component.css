@@ -1,0 +1,39 @@
+.home-container {
+    display: flex;
+    flex-direction: column; /* Para alinhar os elementos verticalmente */
+    height: 100vh; /* Preencher toda a altura da viewport */
+    background-color: black;
+  }
+
+  .favorites-container {
+    display: flex;
+    flex-direction: column; /* Para alinhar os elementos verticalmente */
+    height: 100vh; /* Preencher toda a altura da viewport */
+    background-color: black;
+  }
+
+  .table-box {
+    background-color: black;
+    margin: 120px auto 32px;
+    padding: 0 20px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+    width: -webkit-fill-available;
+    text-align: -webkit-center;
+  }
+
+  .mat-table {
+    border-radius: 10px; /* Defina o raio de borda desejado */
+    overflow: hidden; /* Para garantir que o conteúdo dentro da tabela não ultrapasse os cantos arredondados */
+    margin-top: 50px;
+  }
+
+  .table-title {
+    color: white;
+    margin-top: 40px;
+    letter-spacing: 0.1rem;
+    font-size: 3.0rem;
+    text-align: center;
+    font-weight: 700;
+  }
